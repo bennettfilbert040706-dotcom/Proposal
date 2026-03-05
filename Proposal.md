@@ -9,88 +9,79 @@ Group:
 
 # Development Timeline
 
-## Phase 1: Planning & Design 
+### Phase 1: Planning & Physics Foundations
+**Week 2: Concept & Requirements**
+* Define "Mario Logic": Gravity constants, terminal velocity, and jump impulse values.
+* Setup C++ environment: SFML linking, directory structure, and CMake configuration.
+* Sketch the "Game Loop": `HandleInput` → `Update(dt)` → `Render`.
 
-### Week 2: Concept & Requirements
-- [ ] Decide on core gameplay: player, enemies, dungeon size, combat type.
-- [ ] List required features: movement, combat, inventory, dungeon layout.
-- [ ] Sketch basic game flow (start menu → dungeon → fight → loot → next room).
+**Week 3: OOP Design & Architecture**
+* Create Class Diagram: `Entity`, `Player`, `Enemy`, `Tile`, `Camera`.
+* Define Inheritance Hierarchy: `Entity` → `DynamicEntity` (Mario/Goomba) and `StaticEntity` (Blocks).
 
-### Week 3: OOP Design
-- [ ] Create class diagram: Player, Enemy, Item, Dungeon, Room, GameManager.
-- [ ] Define attributes & methods for each class.
-- [ ] Decide inheritance hierarchy (e.g., Enemy → Goblin, Skeleton).
-- [ ] Draft basic interaction flow (player moves, attacks, picks up items).
+* Establish the `GameManager` to coordinate state transitions.
 
+### Phase 2: Core Mechanics & Prototyping
+**Week 4: The Kinematic Player**
+* Implement horizontal movement with acceleration/deceleration logic.
+* Implement the variable jump (height depends on button hold duration).
 
-## Phase 2: Core Mechanics & Prototyping 
-
-### Week 4: Player & Movement
-- [ ] Implement player class.
-- [ ] Handle movement on grid or free space.
-- [ ] Implement collision detection with walls.
-
-### Week 5: Enemy Base Class & Movement
-- [ ] Implement enemy class with simple AI (e.g., move toward player).
-- [ ] Spawn a few enemies in one room.
-
-### Week 6: Combat System
-- [ ] Player can attack enemies; enemies can attack player.
-- [ ] Damage calculation, health tracking.
-- [ ] Add simple feedback (console text or health bars).
-
-### Week 7: Items & Inventory
-- [ ] Implement items: potion, weapons, keys.
-- [ ] Player can pick up and use items.
-
-### Week 8: Dungeon / Room System
-- [ ] Create room structure.
-- [ ] Implement room transitions (door to next room).
-- [ ] Add enemies/items spawning in rooms.
+**Week 5: Tilemap & Static Collision**
+* Implement a `TileMap` class for rendering levels efficiently using `sf::VertexArray`.
+* Implement AABB Collision Detection for solid ground and walls.
 
 
-## Phase 3: Expansion & Polishing 
+**Week 6: Combat System (Stomp Logic)**
+* Implement vertical collision checks: Detect if Player is falling while colliding with an enemy's top bound.
+* Handle Player state changes (Small Mario vs. Big Mario hitbox scaling).
 
-### Week 9: Enemy Variety
-- [ ] Add different enemy types (Goblin, Skeleton) with unique attacks.
-- [ ] Use inheritance and polymorphism for attack behavior.
+**Week 7: Items & Blocks**
+* Implement `QuestionBlock` and `Brick` logic (breaking vs. bumping).
+* Create item classes: Mushrooms and Coins with their own simple physics.
 
-### Week 10: Loot & Leveling
-- [ ] Add experience points (XP) and leveling system.
-- [ ] Drop items after defeating enemies.
+**Week 8: Level Scrolling (The Camera)**
+* Implement an `sf::View` based camera system.
+* Implement "Camera Locking" to prevent the screen from scrolling backward (classic NES style).
 
-### Week 11: Game UI / Visuals
-- [ ] Add simple sprites or ASCII symbols.
-- [ ] Display player/enemy stats and health bars.
+### Phase 3: Expansion & Polishing
+**Week 9: Enemy Variety & AI**
+* Add different enemy types (Goombas, Koopas) using polymorphism for unique behaviors.
+* Implement "Pit Deaths" and boundary checking.
 
-### Week 12: Dungeon Expansion
-- [ ] Add multiple rooms (fixed map or simple procedural generation).
-- [ ] Add locked doors / keys if possible.
+**Week 10: State Machine & UI**
+* Add Start Menu, Pause, and Game Over screens.
+* Display HUD: Score, Coin count, World number, and Timer using `sf::Font`.
 
-### Week 13: Advanced Features
-- [ ] Optional: mini-boss or special enemy.
-- [ ] Optional: simple AI patterns (patrol, chase, flee).
+**Week 11: Sprite Animations**
+* Implement an `Animation` manager to handle frame-switching for run, jump, and idle cycles.
+* Handle sprite flipping (texture rect mirroring) based on movement direction.
 
-### Week 14: Debugging & Refactoring
-- [ ] Test all existing systems.
-- [ ] Refactor code to follow good OOP practices (encapsulation, modularity).
+**Week 12: Level Expansion & Loading**
+* Implement a File Parser to load level layouts from `.txt` or `.json`.
 
+* Add the "Flagpole" logic to trigger level completion and score calculation.
 
-## Phase 4: Testing & Finalization 
+**Week 13: Advanced Sound & Feedback**
+* Integrate `sf::Sound` for jumps, stomps, and power-ups.
+* Add background music using `sf::Music` with looping logic.
 
-### Week 15: Playtesting
-- [ ] Play the full dungeon.
-- [ ] Check combat balance, movement, room transitions.
+**Week 14: Debugging & Refactoring**
+* Refactor code for Encapsulation (ensure no public member variables).
+* Fix "Wall Clipping" and "Corner Catching" physics bugs.
 
-### Week 16: Bug Fixes & Optimization
-- [ ] Fix remaining issues.
-- [ ] Optimize enemy AI and item logic.
+### Phase 4: Testing & Finalization
+**Week 15: Playtesting & Balance**
+* Fine-tune physics constants (friction/gravity) for the best "game feel."
+* Ensure level difficulty progression is balanced.
 
-### Week 17: Final Touches
-- [ ] Add start/end screens.
-- [ ] Add sound effects (optional) or visual feedback.
-- [ ] Comment code and prepare documentation.
+**Week 16: Optimization**
+* Optimize draw calls for stable 60 FPS.
+* Perform final memory leak checks using Valgrind or Visual Studio Debugger.
 
-### Week 18: Submission
-- [ ] Prepare project package (code + resources + documentation).
-- [ ] Prepare short presentation/demo if required.
+**Week 17: Final Touches**
+* Add visual feedback (particle effects for breaking bricks).
+* Ensure smooth transitions between Game States.
+
+**Week 18: Submission**
+* Prepare project package (Source code, Assets, CMakeLists.txt).
+* Final Documentation: Technical manual and User guide.
